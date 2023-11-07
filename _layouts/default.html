@@ -13,13 +13,124 @@
     <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@300&display=swap" rel="stylesheet">
   </head>
   <body>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/blog">Blog</a>
-      <a href="/services">Services</a>
-    </nav>
+    <header class="desktop-only">
+      <a class="logotype" href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 100 100">
+          <linearGradient id="a" x1="0" x2="100" y1="0" y2="100" gradientUnits="userSpaceOnUse">
+            <stop offset="0" style="stop-color:#aa30be" />
+            <stop offset="1" style="stop-color:#5723b5" />
+          </linearGradient>
+          <path fill="url(#a)" d="M0 0h100v100H0z" />
+          <path fill="#FFF" d="M74 69.5c-.7 0-1.4 0-2.1-.1-.6-.1-1.1-.5-1.1-1.1l-1.8-16c-9-2.9-21.2-4.1-31.2-1.3l-2.3 17.4c-.1.7-.7 1.2-1.5 1.1-.7-.1-1.2-.7-1.1-1.5L35 51.8c-1 .4-1.9.8-2.8 1.2-4.9 2.5-8.2 6.1-10.5 9.4l-3.9 6.3c-.4.6-1.2.8-1.8.4-.6-.4-.8-1.2-.4-1.8.3-.4.6-1 .9-1.5.8-1.4 1.8-3.1 3.1-5L37.9 31c.3-.5 1-.8 1.5-.5.6.2.9.8.9 1.4l-2.2 16.2c9.9-2.4 21.5-1.4 30.5 1.3l-1.9-17.5c-.1-.7.4-1.4 1.1-1.4.7-.1 1.4.4 1.4 1.1l2 18.6c2.8 1 5.2 2.1 7.2 3.3 3.9 2.4 6 5.2 6 7.9 0 2-.9 3.9-2.5 5.3-1.8 1.9-4.7 2.8-7.9 2.8zm-.8-2.6c2.9.2 5.5-.6 7.1-2 1.1-1 1.7-2.1 1.7-3.3 0-1.8-1.7-3.8-4.8-5.7-1.5-1-3.4-1.9-5.5-2.7l1.5 13.7zM36.9 37.7l-9.2 15c1-.7 2.2-1.4 3.4-2 1.4-.7 2.8-1.3 4.4-1.8l1.4-11.2z" />
+        </svg>
+      </a>
+      <input id="menu-btn" class="menu-btn" type="checkbox">
+      <div class="overlay"></div>
+      <label class="menu-icon" for="menu-btn">
+        <span class="navicon"></span>
+      </label>
+      <ul class="header-navbar">
+        {% for link in site.data.navbar.links %}
+          <li class="header-navbar__item">
+            {% if link.items %}
+              <a href="{{ link.link }}" class="header-navbar__link"> {{ link.page }} </a>
+              <ul class="header-navbar__subitems">
+                {% for subitem in link.items %}
+                  <li>
+                    <a href="{{ subitem.link }}" class="header-navbar__sub-link"> {{ subitem.section }} </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <a href="{{ link.link }}" class="header-navbar__link"> {{ link.page }} </a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </header>
+
     <section>
       {{ content }}
     </section>
+
+    <footer class="footer">
+      <ul class="footer__navigation">
+        {% for link in site.data.navbar.links %}
+          <li class="footer__navigation-item desktop-only">
+            {% if link.items %}
+              <a href="{{ link.link }}" class="footer__navigation-link bold">
+                {{ link.page }}
+              </a>
+              <ul class="footer__navigation-subitems">
+                {% for subitem in link.items %}
+                  <li>
+                    <a href="{{ subitem.link }}" class="footer__navigation-sub-link">
+                      {{ subitem.section }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <a href="{{ link.link }}" class="footer__navigation-link bold">
+                {{ link.page }}
+              </a>
+            {% endif %}
+          </li>
+        {% endfor %}
+        <li class="footer__navigation-last-item desktop-only">
+          {% for link in site.data.footer.navigation.links %}
+            <a class="footer__navigation-link bold" href="{{ linl.link }}">
+              {{ link.page }}
+            </a>
+          {% endfor %}
+          <div class="footer__navigation-social-icons desktop-only">
+            {% for icon in site.data.footer.navigation.social_icons %}
+              <a href="{{ icon.link }}">
+                <img src="/assets/images/social_icons/{{ icon.icon }}.svg" alt="{{ icon.icon }}">
+              </a>
+            {% endfor %}
+          </div>
+        </li>
+        <li class=".footer__navigation-social-icons mobile-only">
+          {% for icon in site.data.footer.navigation.social_icons %}
+            <a href="{{ icon.link }}">
+              <img src="/assets/images/social_icons/{{ icon.icon }}.svg" alt="{{ icon.icon }}">
+            </a>
+          {% endfor %}
+        </li>
+      </ul>
+      <div class="contact-info">
+        <div class="contact-info__container">
+          <a class="contact-info__item bold mobile-only" href="{{ site.data.footer.navigation.links[2].link }}">
+            {{ site.data.footer.navigation.links[2].page }}
+          </a>
+          <div class="contact-info__contacts">
+            <a class="contact-info__item" href="email: {{ site.data.footer.contact_info.email }}">
+              {{ site.data.footer.contact_info.email }}
+            </a>
+            <a class="contact-info__item" href="tel: {{ site.data.footer.contact_info.phone_number }}">
+              {{ site.data.footer.contact_info.phone_number }}
+            </a>
+          </div>
+          <div class="footer__navigation-copyright desktop-only">
+            © 2013-{{ site.time | date: '%Y' }}, Active Bridge LLC
+          </div>
+        </div>
+        {% for e in site.data.footer.contact_info.entities %}
+          <div class="contact-info__container desktop-only">
+            <div class="contact-info__item bold"> {{ e.entity }} </div>
+            <div class="contact-info__item"> {{ e.name }} </div>
+            <div class="contact-info__item"> {{ e.address }} </div>
+            <div class="contact-info__item"> {{ e.post }} </div>
+            {% if e.country %}
+              <div class="contact-info__item"> {{ e.country }} </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <div class="footer__navigation-copyright mobile-only">
+          © 2013-{{ site.time | date: '%Y' }}, Active Bridge LLC
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
