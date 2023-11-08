@@ -1,0 +1,19 @@
+<div class="about_us_info__items">
+  <div class="about_us_info__container">
+    {% for item in site.data.index.about_us_items %}
+      <div class="about_us_info__item white-text">
+        <img src="/assets/images/index/{{ item.logo }}.svg" alt="Logo">
+        {{ item.text }}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="about_us_info__photo desktop-only">
+    <!-- TODO: change image according to the page -->
+    <!-- - if params[:page] == 'about'
+      = image_tag 'about/about-bg-2.jpeg'
+    - else
+      = image_tag 'index/about_us_photo.jpg' -->
+    <img src="/assets/images/index/about_us_photo.jpg" alt="About us">
+  </div>
+</div>
